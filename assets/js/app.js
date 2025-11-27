@@ -1,115 +1,86 @@
-// =========================
-// VARIABLES
-// =========================
+// Variables 
+let articulosCarrito = []; 
+const offcanvas = document.querySelector(".offcanvas");
+const btn_shopping = document.querySelector(".btn_shopping");
+const contadorCarrito = document.querySelector("#contador-carrito");
+const closeButton = document.querySelector(".btn-close");
 
-// Array base para manejar productos
-let articulosCarrito = [];
-
-// Contenedor de cards
-const sushisContainer = document.getElementById("sushis-container");
-
-// Contador visual del carrito
-const contadorCarrito = document.getElementById("contador-carrito");
-
-// =========================
-// INICIO
-// =========================
-
+// Inicio
 document.addEventListener("DOMContentLoaded", () => {
-
-  // Escuchar clicks en botones "Agregar al carrito"
-  sushisContainer.addEventListener("click", manejarClickProducto);
+  document.getElementById("sushis-container")
+    .addEventListener("click", agregarAlCarrito);
 });
 
-// =========================
-// MANEJAR CLICK EN UNA CARD
-// =========================
 
-function manejarClickProducto(e) {
-  console.log("Click dentro del contenedor");
 
-  const btn = e.target.closest(".btn-cart");
+// MOSTRAR / CERRAR CON ANIMACIÓN
 
-  if (!btn) {
-    console.log("Click ignorado");
-    return;
+function toggleOffcanvas(show) {
+  offcanvas.style.transition = "transform 0.6s ease, opacity 0.6s ease";
+
+  if (show) {
+    offcanvas.classList.add("show");
+    offcanvas.classList.remove("hiding");
+  } else {
+    offcanvas.classList.add("hiding");
+
+    setTimeout(() => {
+      offcanvas.classList.remove("show");
+      offcanvas.classList.remove("hiding");
+    }, 600);
   }
+}
 
-  console.log("Botón 'Agregar al carrito' presionado");
+
+//  AGREGAR AL CARRITO
+function agregarAlCarrito(e) {
+  const btn = e.target.closest(".btn-cart");
+  if (!btn) return;
+
+  // Activar animación del offcanvas
+  toggleOffcanvas(true);
+
+  // Animación del botón del carrito
+  btn_shopping.classList.add("balanceo");
+  setTimeout(() => btn_shopping.classList.remove("balanceo"), 500);
 
   const card = btn.closest(".card");
 
-  if (!card) {
-    console.log("No se encontró la card");
-    return;
-  }
+  // IMPORTANTE: precio debe tener class="price"
+  const precioTexto = card.querySelector(".price").textContent.replace("$", "");
+  const precio = parseFloat(precioTexto);
 
-  console.log("Card encontrada");
-
-  // Estructura simple del producto
+  // Producto básico
   const producto = {
-    id: card.querySelector("img").alt || "",
-    nombre: card.querySelector(".card-title")?.textContent || "",
-    categoria: card.querySelector(".card-text strong")?.textContent || "",
-    precio: obtenerPrecio(card),
-    imagen: card.querySelector("img")?.src || ""
+    id: card.querySelector(".card-title").textContent, // mejor que el "alt"
+    cantidad: 1,
+    precio
   };
 
-  console.log("Producto preparado:", producto);
-
-  // Guardar o actualizar
-  agregarProductoBase(producto);
-
-  // Actualizar contador
-  actualizarContador();
-}
-
-// =========================
-// FUNCIÓN BASE PARA GUARDAR PRODUCTO
-// =========================
-
-function agregarProductoBase(producto) {
-
-  const existe = articulosCarrito.find((p) => p.id === producto.id);
-
+  // Revisar si ya existe
+  const existe = articulosCarrito.find(p => p.id === producto.id);
   if (existe) {
-    console.log(`El producto ya existe`);
-    existe.cantidad = (existe.cantidad || 1) + 1;
+    existe.cantidad++;
   } else {
-    producto.cantidad = 1;
     articulosCarrito.push(producto);
   }
 
-  console.log("Estado actual del carrito:", articulosCarrito);
+  actualizarContadorCarrito();
 }
 
-// =========================
-// OBTENER PRECIO CORRECTO DE LA CARD
-// =========================
 
-function obtenerPrecio(card) {
-  const precioEl = card.querySelector(".price");
 
-  if (!precioEl) {
-    return 0;
-  }
-
-  const precio = parseFloat(precioEl.textContent.replace("$", ""));
-  
-  if (isNaN(precio)) {
-    return 0;
-  }
-  return precio;
-}
-
-// =========================
-// CONTADOR DEL CARRITO
-// =========================
-
-function actualizarContador() {
+// CONTADOR
+function actualizarContadorCarrito() {
   const total = articulosCarrito.reduce((acc, prod) => acc + prod.cantidad, 0);
-
   contadorCarrito.textContent = total;
-
-  console.log("Contador actualizado:", total);
 }
+
+
+// CERRAR OFFCANVAS
+
+btn_shopping.addEventListener("click", () => {
+  toggleOffcanvas(!offcanvas.classList.contains("show"));
+});
+
+closeButton.addEventListener("click", () => toggleOffcanvas(false));
