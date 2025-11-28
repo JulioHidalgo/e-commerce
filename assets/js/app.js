@@ -1,86 +1,171 @@
-// Variables 
+// Variables
 let articulosCarrito = []; 
-const offcanvas = document.querySelector(".offcanvas");
-const btn_shopping = document.querySelector(".btn_shopping");
-const contadorCarrito = document.querySelector("#contador-carrito");
-const closeButton = document.querySelector(".btn-close");
+const carritoContainer = document.querySelector(".offcanvas-body"); 
+const offcanvas = document.querySelector(".offcanvas"); 
+const btn_shopping = document.querySelector(".btn_shopping"); 
+const subtotalElement = document.getElementById("subtotal"); 
+const contadorCarrito = document.querySelector("#contador-carrito"); 
+const closeButton = document.querySelector(".btn-close"); 
 
-// Inicio
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("sushis-container")
-    .addEventListener("click", agregarAlCarrito);
+  document.getElementById("sushis-container").addEventListener("click", agregarAlCarrito);
+  renderizarCarrito();
 });
 
-
-
-// MOSTRAR / CERRAR CON ANIMACIÓN
-
-function toggleOffcanvas(show) {
-  offcanvas.style.transition = "transform 0.6s ease, opacity 0.6s ease";
-
-  if (show) {
-    offcanvas.classList.add("show");
-    offcanvas.classList.remove("hiding");
-  } else {
-    offcanvas.classList.add("hiding");
-
-    setTimeout(() => {
-      offcanvas.classList.remove("show");
-      offcanvas.classList.remove("hiding");
-    }, 600);
-  }
-}
-
-
-//  AGREGAR AL CARRITO
+// Función para agregar al carrito
 function agregarAlCarrito(e) {
   const btn = e.target.closest(".btn-cart");
-  if (!btn) return;
 
-  // Activar animación del offcanvas
-  toggleOffcanvas(true);
+  if (btn) {
+    offcanvas.classList.add("show");
+    btn_shopping.classList.add("balanceo");
+    setTimeout(() => {
+      btn_shopping.classList.remove("balanceo");
+    }, 500);
 
-  // Animación del botón del carrito
-  btn_shopping.classList.add("balanceo");
-  setTimeout(() => btn_shopping.classList.remove("balanceo"), 500);
+    console.log("linea 19");
+    // Se obtiene el card relacionado con el botón para extraer la información del producto
+    const card = btn.closest(".card");
+    const producto = {
+      id: card.querySelector("img").alt, 
+      nombre: card.querySelector(".card-title").textContent,
+      categoria: card.querySelector(".card-text strong").textContent, 
+      precio: parseFloat(card.querySelector(".price").textContent.slice(1)), 
+      cantidad: 1, 
+      imagen: card.querySelector("img").src,
+    };
 
-  const card = btn.closest(".card");
+    // Verificar si el producto ya existe en el carrito
+    const existe = articulosCarrito.find((item) => item.id === producto.id);
+    if (existe) {
+      existe.cantidad++;
+    } else {
+      articulosCarrito.push(producto);
+    }
 
-  // IMPORTANTE: precio debe tener class="price"
-  const precioTexto = card.querySelector(".price").textContent.replace("$", "");
-  const precio = parseFloat(precioTexto);
+    // Renderizar el carrito actualizado
+    renderizarCarrito();
+    actualizarSubtotal();
+    actualizarContadorCarrito();
+  }
+}
 
-  // Producto básico
-  const producto = {
-    id: card.querySelector(".card-title").textContent, // mejor que el "alt"
-    cantidad: 1,
-    precio
-  };
+// Función para renderizar el carrito
+function renderizarCarrito() {
+  carritoContainer.innerHTML = "";
 
-  // Revisar si ya existe
-  const existe = articulosCarrito.find(p => p.id === producto.id);
-  if (existe) {
-    existe.cantidad++;
-  } else {
-    articulosCarrito.push(producto);
+  if (articulosCarrito.length === 0) {
+    carritoContainer.innerHTML = "<p class='text-center'>El carrito está vacío.</p>";
   }
 
-  actualizarContadorCarrito();
+  // Iterar sobre los productos en el carrito y renderizarlos
+  articulosCarrito.forEach((producto) => {
+    const itemHTML = `
+      <div class="container mb-3">
+        <div class="row align-items-center border-bottom py-2">
+          <div class="col-3">
+            <img class="img-fluid rounded" src="${producto.imagen}" alt="${producto.nombre}" />
+          </div>
+          <div class="col-6">
+            <h6 class="mb-1 title-product">${producto.nombre}</h6>
+            <p class="mb-0 detalles-product">Categoría: ${producto.categoria}</p>
+          </div>
+          <div class="col-3 text-end">
+            <!-- Mostrar cantidad y precio total del producto -->
+            <span class="fw-bold"><span class="fs-6 color-gris">${
+              producto.cantidad
+            }x</span><span class="fs-5 precio">$${(producto.precio * producto.cantidad).toFixed(
+      2
+    )}</span>
+            </span>
+
+            <!-- Botón para eliminar el producto del carrito -->
+            <button class="btn btn-danger mt-2 btn-borrar" data-id="${
+              producto.id
+            }"><i class="bi bi-trash3"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    carritoContainer.insertAdjacentHTML("beforeend", itemHTML);
+  });
+
+  // eliminación de producto
+  agregarEventosBorrar();
 }
 
+// Función para eliminar un producto del carrito
+function agregarEventosBorrar() {
+  const botonesBorrar = document.querySelectorAll(".btn-borrar");
 
+  botonesBorrar.forEach((boton) => {
+    boton.addEventListener("click", (e) => {
+      const productoId = e.target.closest("button").dataset.id;
 
-// CONTADOR
+      articulosCarrito = articulosCarrito
+        .map((producto) => {
+          if (producto.id === productoId) {
+            if (producto.cantidad > 1) {
+              producto.cantidad--; 
+              return producto; 
+            }
+            return null;
+          }
+          return producto;
+        })
+        .filter((producto) => producto !== null); 
+
+      // Volver a renderizar el carrito con los cambios
+      renderizarCarrito();
+      actualizarSubtotal();
+      actualizarContadorCarrito();
+
+    });
+  });
+}
+
+// Función para calcular y actualizar el subtotal
+function actualizarSubtotal() {
+  const subtotal = articulosCarrito.reduce((total, producto) => {
+    return total + producto.precio * producto.cantidad;
+  }, 0);
+  subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+}
+
+// Función para actualizar el contador de productos en el carrito
 function actualizarContadorCarrito() {
-  const total = articulosCarrito.reduce((acc, prod) => acc + prod.cantidad, 0);
-  contadorCarrito.textContent = total;
+  const totalProductos = articulosCarrito.length;
+  contadorCarrito.textContent = totalProductos;
 }
 
 
-// CERRAR OFFCANVAS
+// Función para mostrar/ocultar el carrito con animación
+function toggleOffcanvas(show) {
+  // Añadir transiciones para el efecto visual de apertura/cierre
+  offcanvas.style.transition = "transform 0.6s ease, opacity 0.6s ease";
 
+  // Mostrar el carrito si 'show' es true, ocultarlo si es false
+  if (show) {
+    offcanvas.classList.add("show");
+  } else {
+    offcanvas.classList.remove("show");
+    offcanvas.classList.add("hiding");
+    // Eliminar la clase 'hiding' después de la animación
+    setTimeout(() => offcanvas.classList.remove("hiding"), 600);
+  }
+}
+
+// Evento para mostrar/ocultar el carrito al hacer clic en el botón de compra
 btn_shopping.addEventListener("click", () => {
   toggleOffcanvas(!offcanvas.classList.contains("show"));
+  // Añadir una animación de balanceo al botón
+  btn_shopping.classList.toggle("balanceo");
 });
 
+// Evento para cerrar el carrito al hacer clic en el botón de cerrar
 closeButton.addEventListener("click", () => toggleOffcanvas(false));
+
+
+
