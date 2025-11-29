@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'nonce-12345';">
     <title>KAIKAI SUSHI - El Quisco</title>
     <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon" />
     <link
@@ -74,67 +75,6 @@
     <div class="container my-5">
       <h1 class="text-center fw-bold text-white">Bienvenidos a KAIKAI SUSHI</h1>
       <div id="sushis-container" class="row g-4 mt-4">
-        <!-- CARD PRODUCTO -->
-<div class="col-12 col-sm-6 col-md-4 col-lg-3">
-  <div class="card custom-card h-100 border-0">
-    <div class="position-relative overflow-hidden">
-      <img src="assets/img-products/sushi_01.jpg" class="card-img-top" alt="Producto">
-    </div>
-    <div class="card-body text-center">
-      <h5 class="card-title">Nombre del Sushi</h5>
-      <p class="card-text">Categoría: <strong>sushi</strong></p>
-      <p class="card-text">Precio: <strong class="price">$5200</strong></p>
-      <button class="btn btn-cart w-100 mt-2">
-        Agregar al carrito <i class="bi bi-bag-heart ms-2"></i>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="col-12 col-sm-6 col-md-4 col-lg-3">
-  <div class="card custom-card h-100 border-0">
-    <div class="position-relative overflow-hidden">
-      <img src="assets/img-products/sushi_02.jpg" class="card-img-top" alt="Producto">
-    </div>
-    <div class="card-body text-center">
-      <h5 class="card-title">Nombre del Sushi</h5>
-      <p class="card-text">Categoría: <strong>sushi</strong></p>
-      <p class="card-text">Precio: <strong class="price">$5200</strong></p>
-      <button class="btn btn-cart w-100 mt-2">
-        Agregar al carrito <i class="bi bi-bag-heart ms-2"></i>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="col-12 col-sm-6 col-md-4 col-lg-3">
-  <div class="card custom-card h-100 border-0">
-    <div class="position-relative overflow-hidden">
-      <img src="assets/img-products/sushi_03.jpg" class="card-img-top" alt="Producto">
-    </div>
-    <div class="card-body text-center">
-      <h5 class="card-title">Nombre del Sushi</h5>
-      <p class="card-text">Categoría: <strong>sushi</strong></p>
-<p class="card-text">Precio: <strong class="price">$5200</strong></p>
-      <button class="btn btn-cart w-100 mt-2">
-        Agregar al carrito <i class="bi bi-bag-heart ms-2"></i>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="col-12 col-sm-6 col-md-4 col-lg-3">
-  <div class="card custom-card h-100 border-0">
-    <div class="position-relative overflow-hidden">
-      <img src="assets/img-products/sushi_04.jpg" class="card-img-top" alt="Producto">
-    </div>
-    <div class="card-body text-center">
-      <h5 class="card-title">Nombre del Sushi</h5>
-      <p class="card-text">Categoría: <strong>sushi</strong></p>
-      <p class="card-text">Precio: <strong class="price">$5200</strong></p>
-      <button class="btn btn-cart w-100 mt-2">
-        Agregar al carrito <i class="bi bi-bag-heart ms-2"></i>
-      </button>
-    </div>
-  </div>
-</div>
 
       </div>
     </div>
@@ -213,6 +153,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/obtenerProductos.js"></script>
     <script src="assets/js/app.js"></script>
   </body>
 </html>

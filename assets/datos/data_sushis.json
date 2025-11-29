@@ -1,0 +1,294 @@
+[
+  {
+    "title": "TABLAS MIX",
+    "items": [
+      {
+        "name": "20 mix",
+        "price": 9000,
+        "image": "mix_20",
+        "category": "mix",
+        "details": [
+          "Camaron queso palta en sesamo",
+          "Pollo queso cebollin en panko"
+        ]
+      },
+      {
+        "name": "30 mix",
+        "price": 12000,
+        "image": "mix_30",
+        "category": "mix",
+        "details": [
+          "Camaron queso palta en sesamo",
+          "Pollo queso palmito en palta",
+          "Kanikama queso cebollin en panko"
+        ]
+      },
+      {
+        "name": "40 mix",
+        "price": 15000,
+        "image": "mix_40",
+        "category": "mix",
+        "details": [
+          "Camaron queso palta en sesamo",
+          "Pollo queso palmito en palta",
+          "Kanikama queso cebollin en panko",
+          "Palmito queso cebollin en panko"
+        ]
+      },
+      {
+        "name": "50 mix",
+        "price": 18000,
+        "image": "mix_50",
+        "category": "mix",
+        "details": [
+          "Camaron queso palta en sesamo",
+          "Pollo queso palmito en palta",
+          "Kanikama queso palta en ciboulette",
+          "Palmito queso cebollin en panko",
+          "Pollo queso cebollin en panko"
+        ]
+      },
+      {
+        "name": "60 mix",
+        "price": 21000,
+        "image": "mix_60",
+        "category": "mix",
+        "details": [
+          "Camaron queso palta en sesamo",
+          "Pollo queso palmito en palta",
+          "Kanikama queso palta en ciboulette",
+          "Salmon queso en nori",
+          "Palmito queso cebollin en panko",
+          "Pollo queso cebollin en panko"
+        ]
+      }
+    ]
+  },
+
+  {
+    "title": "TABLAS FRITOS",
+    "items": [
+      {
+        "name": "20 Fritos",
+        "price": 10500,
+        "image": "fritos_20",
+        "category": "frito",
+        "details": [
+          "Camaron queso cebollin",
+          "Pollo queso cebollin"
+        ]
+      },
+      {
+        "name": "30 Fritos",
+        "price": 13500,
+        "image": "fritos_30",
+        "category": "frito",
+        "details": [
+          "Camaron queso cebollin",
+          "Pollo queso cebollin",
+          "Kanikama queso cebollin"
+        ]
+      },
+      {
+        "name": "40 Fritos",
+        "price": 16500,
+        "image": "fritos_40",
+        "category": "frito",
+        "details": [
+          "Camaron queso cebollin",
+          "Pollo queso cebollin",
+          "Kanikama queso cebollin",
+          "Palmito queso cebollin"
+        ]
+      },
+      {
+        "name": "50 Fritos",
+        "price": 19500,
+        "image": "fritos_50",
+        "category": "frito",
+        "details": [
+          "Camaron queso cebollin",
+          "Pollo queso cebollin",
+          "Kanikama queso cebollin",
+          "Palmito queso cebollin",
+          "Salmon queso cebollin"
+        ]
+      }
+    ]
+  },
+
+  {
+    "title": "TABLAS VEGETARIANAS",
+    "items": [
+      {
+        "name": "20 mix vegetariano",
+        "price": 8500,
+        "image": "veg_20",
+        "category": "veg",
+        "details": [
+          "Zucchini queso palta en sesamo",
+          "Champiñon queso cebollin en panko"
+        ]
+      },
+      {
+        "name": "30 mix vegetariano",
+        "price": 10500,
+        "image": "veg_30",
+        "category": "veg",
+        "details": [
+          "Zucchini queso palta en sesamo",
+          "Palmito queso choclito en palta",
+          "Champiñon queso cebollin en panko"
+        ]
+      }
+    ]
+  },
+
+  {
+    "title": "TABLAS PREMIUM",
+    "items": [
+      {
+        "name": "30 premium",
+        "price": 15000,
+        "image": "premium_30",
+        "category": "premium",
+        "details": [
+          "Pollo frito palta cebollín en queso",
+          "Salmon queso cebollín en palta",
+          "Camarón frito queso cebollín en panko"
+        ]
+      },
+      {
+        "name": "40 premium",
+        "price": 18500,
+        "image": "premium_40",
+        "category": "premium",
+        "details": [
+          "Pollo frito palta cebollín en queso",
+          "Salmon queso cebollín en palta",
+          "Camarón queso cebollín en panko",
+          "Pollo queso cebollin en panko"
+        ]
+      }
+    ]
+  },
+
+  {
+    "title": "GOHAN",
+    "items": [
+      {
+        "name": "Gohan Pollo apanado",
+        "price": 6300,
+        "image": "gohan_pollo",
+        "category": "gohan"
+      },
+      {
+        "name": "Gohan champiñón apanado",
+        "price": 6300,
+        "image": "gohan_champi",
+        "category": "gohan"
+      },
+      {
+        "name": "Gohan Marino",
+        "price": 7500,
+        "image": "gohan_marino",
+        "category": "gohan"
+      },
+      {
+        "name": "Gohan Acevichado",
+        "price": 8000,
+        "image": "gohan_acevichado",
+        "category": "gohan"
+      }
+    ]
+  },
+
+  {
+    "title": "ROLLS ESPECIALES",
+    "items": [
+      {
+        "name": "KaiKai Vilu",
+        "price": 8500,
+        "image": "especial_vilu",
+        "category": "especial",
+        "details": "Camaron frito, queso, palta en panko con ceviche y topping crocante"
+      },
+      {
+        "name": "TrenTren Vilu",
+        "price": 7800,
+        "image": "especial_trentren",
+        "category": "especial",
+        "details": "Pulpo, queso, cebollin envuelto en salmon con salsa acevichada"
+      },
+      {
+        "name": "El Camahueto",
+        "price": 7800,
+        "image": "especial_camahueto",
+        "category": "especial",
+        "details": "Salmon, camaron frito, queso, cebollin envuelto en palta"
+      },
+      {
+        "name": "El Millalobo",
+        "price": 7800,
+        "image": "especial_millalobo",
+        "category": "especial",
+        "details": "Atún, camaron frito, palta, cebollin envuelto en queso flambeado con salsa de maracuyá"
+      }
+    ]
+  },
+
+  {
+    "title": "ROLLS SIN ARROZ",
+    "items": [
+      {
+        "name": "Roll sin arroz (personalizable)",
+        "price": 7500,
+        "image": "roll_no_rice",
+        "category": "no_rice",
+        "base": ["Queso", "Palta", "Cebollín"],
+        "envolturas": ["Panko", "Salmon", "Palta", "Queso Crema"],
+        "proteinas": [
+          "Salmon", "Salmon Furai", "Camarón", "Camarón furai",
+          "Pollo", "Pollo Furai", "Palmito", "Champiñón Furai"
+        ]
+      }
+    ]
+  },
+
+  {
+    "title": "ANTOJITOS KAIKAI",
+    "items": [
+      {
+        "name": "Onigiris (5 unidades)",
+        "price": 5500,
+        "image": "antojito_onigiri",
+        "category": "antojitos",
+        "details": "+ Salsa de la casa"
+      },
+      {
+        "name": "Bastones de pollo (6 unidades)",
+        "price": 4500,
+        "image": "antojito_pollo",
+        "category": "antojitos",
+        "details": "+ Salsa de la casa"
+      },
+      {
+        "name": "Camarón apanado (6 unidades)",
+        "price": 4800,
+        "image": "antojito_camaron",
+        "category": "antojitos",
+        "details": "+ Salsa de la casa"
+      }
+    ]
+  },
+
+  {
+    "title": "SALSAS DE LA CASA",
+    "items": [
+      { "name": "Acevichada", "image": "salsa_acevichada", "category": "salsas","price": 800 },
+      { "name": "Teriyaki", "image": "salsa_teriyaki", "category": "salsas","price": 800 },
+      { "name": "Spicy", "image": "salsa_spicy", "category": "salsas","price": 800 },
+      { "name": "Maracuya", "image": "salsa_maracuya", "category": "salsas","price": 800 }
+    ]
+  }
+]
