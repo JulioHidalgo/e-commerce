@@ -7,13 +7,13 @@ const subtotalElement = document.getElementById("subtotal");
 const contadorCarrito = document.querySelector("#contador-carrito"); 
 const closeButton = document.querySelector(".btn-close"); 
 
-// ===== INICIO // ===========
+// ===== INICIO  ===========
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("sushis-container").addEventListener("click", agregarAlCarrito);
   renderizarCarrito();
 });
 
-// ===== AGREGAR AL CARRITO// ======
+// ===== AGREGAR AL CARRITO ======
 function agregarAlCarrito(e) {
   const btn = e.target.closest(".btn-cart");
   if (!btn) return;
@@ -22,7 +22,6 @@ function agregarAlCarrito(e) {
   btn_shopping.classList.add("balanceo");
   setTimeout(() => btn_shopping.classList.remove("balanceo"), 500);
 
-  // Obtener datos del producto desde data-attributes
   const card = btn.closest(".card");
 
   const producto = {
@@ -47,7 +46,6 @@ function agregarAlCarrito(e) {
   actualizarContadorCarrito();
 }
 
-// ====RENDERIZAR CARRITO // =========
 function renderizarCarrito() {
   carritoContainer.innerHTML = "";
 
@@ -86,9 +84,7 @@ function renderizarCarrito() {
   agregarEventosBorrar();
 }
 
-// ==========================
-// ELIMINAR PRODUCTOS
-// ==========================
+// ==== ELIMINAR PRODUCTOS =================
 function agregarEventosBorrar() {
   const botonesBorrar = document.querySelectorAll(".btn-borrar");
 
@@ -116,9 +112,7 @@ function agregarEventosBorrar() {
   });
 }
 
-// ==========================
-// SUBTOTAL
-// ==========================
+// ========= SUBTOTAL ==========
 function actualizarSubtotal() {
   const subtotal = articulosCarrito.reduce(
     (total, p) => total + p.precio * p.cantidad,
@@ -127,9 +121,7 @@ function actualizarSubtotal() {
   subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
 }
 
-// ==========================
-// CONTADOR
-// ==========================
+// ===== CONTADOR ================
 function actualizarContadorCarrito() {
   contadorCarrito.textContent = articulosCarrito.reduce(
     (total, p) => total + p.cantidad,
@@ -137,7 +129,7 @@ function actualizarContadorCarrito() {
   );
 }
 
-// === ANIMACIÓN Y TOGGLE // 
+// === ANIMACIÓN VENTANA COSTADO CON PRODUCTOS ================
 function toggleOffcanvas(show) {
   offcanvas.style.transition = "transform 0.6s ease, opacity 0.6s ease";
 

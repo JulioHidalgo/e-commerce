@@ -1,27 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("sushis-container");
 
-  // ==========================================
-  // Función para crear cada tarjeta de producto
-  // ==========================================
+  // ===== Función para crear cada tarjeta de producto ====================
 function createSushiCard({ name, price, image, category, details }) {
-  // Detalles (ul o texto)
   const detailsHTML = Array.isArray(details)
     ? `<ul class="small">${details.map((d) => `<li>${d}</li>`).join("")}</ul>`
-    : details
-    ? `<p class="small">${details}</p>`
-    : "";
+    : details ? `<p class="small">${details}</p>` : "";
 
   return `
     <div class="col-md-3">
-      <div class="card h-100 border-0 custom-card bg-dark text-white">
+      <div 
+        class="card h-100 border-0 custom-card bg-dark text-white"
+        data-id="${name.replace(/\s+/g, "_")}"
+        data-name="${name}"
+        data-category="${category}"
+        data-price="${price ? price : 0}"
+        data-image="${image}"
+      >
         
-        <img src="assets/img-products/${image}.jpg" 
-            class="card-img-top" 
-            alt="${name}">
+        <img src="assets/img-products/${image}.jpg" class="card-img-top" alt="${name}">
 
         <div class="card-body d-flex flex-column">
           <h5 class="card-title fw-bold">${name}</h5>
+
+          <p class="card-text">Categoría: <strong>${category}</strong></p>
 
           <p class="card-text text-warning fs-5">
             ${price ? "$" + price.toLocaleString() : ""}
@@ -39,9 +41,7 @@ function createSushiCard({ name, price, image, category, details }) {
 }
 
 
-  // ==========================================
-  // Función principal para cargar JSON
-  // ==========================================
+  // ======= Función para cargar JSON con los productos ==================
   async function loadSushis() {
     try {
       const response = await fetch("./assets/datos/data_sushis.json");
@@ -52,14 +52,9 @@ function createSushiCard({ name, price, image, category, details }) {
 
       const data = await response.json();
 
-      // data = array de categorías: [{title:"...", items:[...]}, ...]
-
-      container.innerHTML = ""; // limpiar contenedor
+      container.innerHTML = "";
 
       data.forEach((categoria) => {
-        // ===========================
-        // TÍTULO de cada categoría
-        // ===========================
         container.innerHTML += `
           <div class="col-12 mt-5 mb-3">
             <h2 class="text-center text-warning fw-bold border-bottom pb-2">
@@ -67,10 +62,6 @@ function createSushiCard({ name, price, image, category, details }) {
             </h2>
           </div>
         `;
-
-        // ===========================
-        // Renderizar tarjetas internas
-        // ===========================
         const cardsHTML = categoria.items
           .map((item) => createSushiCard(item))
           .join("");

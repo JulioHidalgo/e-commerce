@@ -9,11 +9,11 @@ body {
   mask-image: linear-gradient(black 80%, transparent);
 }
 .btn-cart {
-  background-color: #1b1a20;
+  background-color: brown;
   color: white;
 }
 .btn-cart:hover {
-  background-color: #333 !important;
+  background-color: #000 !important;
   color: #fff !important;
 }
 .custom-card:hover img {
@@ -96,10 +96,31 @@ body {
 .kks-nav a:hover {
   color: #e6002e;
 }
+h1 {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+    font-family: "Mochiy Pop One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 
 h2 {
   text-transform: uppercase;
   letter-spacing: 2px;
+    font-family: "RocknRoll One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.rocknroll-one-regular {
+  font-family: "RocknRoll One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.mochiy-pop-one-regular {
+  font-family: "Mochiy Pop One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 
@@ -168,4 +189,6 @@ h2 {
   transform: translateX(100%);
   opacity: 0;
 }
+
+
 

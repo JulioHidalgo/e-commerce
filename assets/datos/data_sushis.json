@@ -216,7 +216,7 @@
       {
         "name": "TrenTren Vilu",
         "price": 7800,
-        "image": "especial_trentren",
+        "image": "trentrenvilu",
         "category": "especial",
         "details": "Pulpo, queso, cebollin envuelto en salmon con salsa acevichada"
       },
@@ -230,7 +230,7 @@
       {
         "name": "El Millalobo",
         "price": 7800,
-        "image": "especial_millalobo",
+        "image": "millalobo",
         "category": "especial",
         "details": "Atún, camaron frito, palta, cebollin envuelto en queso flambeado con salsa de maracuyá"
       }
