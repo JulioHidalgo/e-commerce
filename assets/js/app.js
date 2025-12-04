@@ -9,21 +9,26 @@ const closeButton = document.querySelector(".btn-close");
 
 // ===== INICIO  ===========
 document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("btn-wsp").addEventListener("click", generarPedidoWhatsApp);
   document.getElementById("sushis-container").addEventListener("click", agregarAlCarrito);
   renderizarCarrito();
 });
 
-// ===== AGREGAR AL CARRITO ======
+
+// Función para agregar al carrito
 function agregarAlCarrito(e) {
   const btn = e.target.closest(".btn-cart");
-  if (!btn) return;
 
+
+  if (btn) {
   offcanvas.classList.add("show");
   btn_shopping.classList.add("balanceo");
-  setTimeout(() => btn_shopping.classList.remove("balanceo"), 500);
+  setTimeout(() => {
+    btn_shopping.classList.remove("balanceo");
+  }, 500);
+
 
   const card = btn.closest(".card");
-
   const producto = {
     id: card.dataset.id,
     nombre: card.dataset.name,
@@ -34,7 +39,6 @@ function agregarAlCarrito(e) {
   };
 
   const existe = articulosCarrito.find(item => item.id === producto.id);
-
   if (existe) {
     existe.cantidad++;
   } else {
@@ -44,6 +48,8 @@ function agregarAlCarrito(e) {
   renderizarCarrito();
   actualizarSubtotal();
   actualizarContadorCarrito();
+  actualizarEstadoBotonWhatsApp();
+ }
 }
 
 function renderizarCarrito() {
@@ -54,7 +60,7 @@ function renderizarCarrito() {
     return;
   }
 
-  articulosCarrito.forEach(producto => {
+  articulosCarrito.forEach((producto) => {
     const itemHTML = `
       <div class="container mb-3">
         <div class="row align-items-center border-bottom py-2">
@@ -88,46 +94,75 @@ function renderizarCarrito() {
 function agregarEventosBorrar() {
   const botonesBorrar = document.querySelectorAll(".btn-borrar");
 
-  botonesBorrar.forEach(boton => {
-    boton.addEventListener("click", e => {
+  botonesBorrar.forEach((boton) => {
+    boton.addEventListener("click", (e) => {
       const productoId = e.target.closest("button").dataset.id;
 
       articulosCarrito = articulosCarrito
-        .map(p => {
-          if (p.id === productoId) {
-            if (p.cantidad > 1) {
-              p.cantidad--;
-              return p;
+        .map((producto) => {
+          if (producto.id === productoId) {
+            if (producto.cantidad > 1) {
+              producto.cantidad--;
+              return producto;
             }
             return null;
           }
-          return p;
+          return producto;
         })
-        .filter(p => p !== null);
+        .filter((producto) => producto !== null);
 
       renderizarCarrito();
       actualizarSubtotal();
       actualizarContadorCarrito();
+      actualizarEstadoBotonWhatsApp();
     });
   });
 }
 
 // ========= SUBTOTAL ==========
 function actualizarSubtotal() {
-  const subtotal = articulosCarrito.reduce(
-    (total, p) => total + p.precio * p.cantidad,
-    0
-  );
+  const subtotal = articulosCarrito.reduce((total, producto) => {
+    return total + producto.precio * producto.cantidad;
+  }, 0);
   subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
 }
 
 // ===== CONTADOR ================
 function actualizarContadorCarrito() {
-  contadorCarrito.textContent = articulosCarrito.reduce(
-    (total, p) => total + p.cantidad,
+  const totalProductos = articulosCarrito.length;
+  contadorCarrito.textContent = totalProductos;
+}
+
+// Función para generar y enviar un pedido a través de WhatsApp
+function generarPedidoWhatsApp() {
+  if (articulosCarrito.length === 0) {
+    alert("El carrito está vacío. ¡Agrega productos antes de enviar el pedido!");
+    return;
+  }
+
+  let mensaje = "¡Hola! Quiero realizar el siguiente pedido:\n\n";
+
+  articulosCarrito.forEach((producto, index) => {
+    mensaje += `${index + 1}. ${producto.nombre} (${producto.categoria}) - $${producto.precio} x ${producto.cantidad}\n`;
+  });
+
+  const total = articulosCarrito.reduce(
+    (acc, producto) => acc + producto.precio * producto.cantidad,
     0
   );
+
+  mensaje += `\nTotal: $${total.toFixed(2)}\n\n¡Gracias!`;
+
+  const mensajeCodificado = encodeURIComponent(mensaje);
+
+  // Generar el enlace de WhatsApp con el mensaje codificado
+  const urlWhatsApp = `https://wa.me/573213872648?text=${mensajeCodificado}`;
+
+  // Abrir el enlace en una nueva ventana para enviar el mensaje
+  window.open(urlWhatsApp, "_blank");
 }
+
+
 
 // === ANIMACIÓN VENTANA COSTADO CON PRODUCTOS ================
 function toggleOffcanvas(show) {
@@ -148,3 +183,15 @@ btn_shopping.addEventListener("click", () => {
 });
 
 closeButton.addEventListener("click", () => toggleOffcanvas(false));
+
+// Deshabilitar el botón si el carrito está vacío
+const btnWhatsApp = document.querySelector("[data-whatsapp]");
+
+function actualizarEstadoBotonWhatsApp() {
+  if (!btnWhatsApp) return; // Evita error si el botón no existe
+
+  btnWhatsApp.disabled = articulosCarrito.length === 0;
+}
+
+// Llamar a la función para actualizar el estado del botón cada vez que se actualice el carrito
+actualizarEstadoBotonWhatsApp();
