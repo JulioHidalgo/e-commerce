@@ -18,7 +18,7 @@ function createSushiCard({ name, price, image, category, details }) {
         data-image="${image}"
       >
         
-        <img src="assets/img-products/${image}.jpg" class="card-img-top" alt="${name}">
+        <img src="assets/img/img-products/${image}.jpg" class="card-img-top" alt="${name}">
 
         <div class="card-body d-flex flex-column">
           <h5 class="card-title fw-bold">${name}</h5>

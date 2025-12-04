@@ -36,7 +36,7 @@ function agregarAlCarrito(e) {
     categoria: card.dataset.category,
     precio: parseFloat(card.dataset.price),
     cantidad: 1,
-    imagen: `assets/img-products/${card.dataset.image}.jpg`
+    imagen: `assets/img/img-products/${card.dataset.image}.jpg`
   };
 
   const existe = articulosCarrito.find(item => item.id === producto.id);
