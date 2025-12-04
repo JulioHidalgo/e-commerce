@@ -7,6 +7,7 @@ const subtotalElement = document.getElementById("subtotal");
 const contadorCarrito = document.querySelector("#contador-carrito"); 
 const closeButton = document.querySelector(".btn-close"); 
 
+
 // ===== INICIO  ===========
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btn-wsp").addEventListener("click", generarPedidoWhatsApp);
@@ -74,7 +75,7 @@ function renderizarCarrito() {
           <div class="col-3 text-end">
             <span class="fw-bold">
               <span class="fs-6 color-gris">${producto.cantidad}x</span>
-              <span class="fs-5 precio">$${(producto.precio * producto.cantidad).toFixed(2)}</span>
+              <span class="fs-7 precio">$${(producto.precio * producto.cantidad).toFixed(2)}</span>
             </span>
 
             <button class="btn btn-danger mt-2 btn-borrar" data-id="${producto.id}">
@@ -140,6 +141,9 @@ function generarPedidoWhatsApp() {
     return;
   }
 
+  // Obtener extras ACTUALIZADOS en tiempo real
+  const extras = obtenerExtrasPedido();
+
   let mensaje = "¡Hola! Quiero realizar el siguiente pedido:\n\n";
 
   articulosCarrito.forEach((producto, index) => {
@@ -151,17 +155,30 @@ function generarPedidoWhatsApp() {
     0
   );
 
-  mensaje += `\nTotal: $${total.toFixed(2)}\n\n¡Gracias!`;
+  mensaje += `\nTotal: $${total.toFixed(2)}\n\n`;
+
+  // Agregar EXTRAS correctamente
+  mensaje += "Extras del pedido:\n";
+  mensaje += `- Salsa Teriyaki: ${extras.salsaTeriyaki ? "Sí" : "No"}\n`;
+  mensaje += `- Jengibre: ${extras.jengibre ? "Sí" : "No"}\n`;
+  mensaje += `${extras.fijo}\n\n`;
+
+  mensaje += "¡Gracias!";
 
   const mensajeCodificado = encodeURIComponent(mensaje);
 
-  // Generar el enlace de WhatsApp con el mensaje codificado
-  const urlWhatsApp = `https://wa.me/573213872648?text=${mensajeCodificado}`;
-
-  // Abrir el enlace en una nueva ventana para enviar el mensaje
+  const urlWhatsApp = `https://wa.me/56936821844?text=${mensajeCodificado}`;
   window.open(urlWhatsApp, "_blank");
 }
 
+
+function obtenerExtrasPedido() {
+  return {
+    salsaTeriyaki: document.getElementById("toggleSalsaTeriyaki").checked,
+    jengibre: document.getElementById("toggleJengibre").checked,
+    fijo: "1 Salsa Soya, 2 Palitos por persona"
+  };
+}
 
 
 // === ANIMACIÓN VENTANA COSTADO CON PRODUCTOS ================

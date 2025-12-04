@@ -244,7 +244,7 @@
         "name": "Roll sin arroz (personalizable)",
         "price": 7500,
         "image": "roll_no_rice",
-        "category": "no_rice",
+        "category": "sin_arroz",
         "base": ["Queso", "Palta", "Cebollín"],
         "envolturas": ["Panko", "Salmon", "Palta", "Queso Crema"],
         "proteinas": [
