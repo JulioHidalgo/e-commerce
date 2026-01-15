@@ -57,6 +57,79 @@ body {
   padding: 0 20px;
 }
 
+/* Estilo general del botón */
+.header-phone .phone-link {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  background: #e63946; 
+  color: white;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  gap: 8px;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.header-phone .phone-link:hover {
+  background: #ff4d5a;
+  transform: scale(1.05);
+}
+
+/* Cuando el header está en desktop */
+.header-phone {
+  margin-left: 25px;
+}
+
+/* ====== CORRECCIÓN DEFINITIVA PARA MÓVIL ====== */
+@media (max-width: 768px) {
+
+  /* Contenedor principal del header ocupa todo el ancho */
+  .header_mid_inner {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center;
+  }
+
+  /* El menú se centra correctamente */
+  .kks-nav {
+    width: 100%;
+    display: flex;
+    justify-content: center !important;
+  }
+
+  .kks-nav ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  /* 📞 El teléfono queda centrado al 100% */
+  .header-phone {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 28px 253px 9px 0 !important;
+  }
+
+  .header-phone .phone-link {
+    padding: 10px 18px;
+    font-size: 1.1rem;
+  }
+}
+
+
+
+
+
 /* LOGO */
 .logo img {
   max-height: 100px;

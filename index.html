@@ -5,18 +5,67 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'nonce-12345';">
-  <title>KAIKAI SUSHI - El Quisco</title>
+  <title>KAIKAI SUSHI El Quisco | Delivery, Rolls, Combos y Sushi Fresco</title>
+  <meta name="description"
+    content="KaiKai Sushi en El Quisco 🍣 | Delivery, rolls frescos, roll sin arroz, rolls variados, rolls vegetarianos, sushi vegetarianos, gohan, combos especiales,tablas fritas, tablas premium, handrolls y variedad premium. ¡Haz tu pedido por WhatsApp! El mejor sushi del litoral central." />
+  <meta name="keywords"
+    content="sushi en el quisco, delivery sushi el quisco, sushi a domicilio, sushi kai kai, rolls el quisco, pedidos sushi whatsapp, combos sushi quisco" />
+  <meta name="geo.region" content="CL-VS">
+  <meta name="geo.placename" content="El Quisco">
+  <meta name="geo.position" content="-33.397;-71.699">
+  <meta name="ICBM" content="-33.397, -71.699">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta property="og:title" content="KaiKai Sushi El Quisco | Sushi Fresco + Delivery" />
+  <meta property="og:description"
+    content="Disfruta sushi fresco, combos y rolls en El Quisco. Delivery y pedidos por WhatsApp. ¡KaiKai Sushi te sorprende!" />
+  <meta property="og:image" content="https://kaikaisushi.cl/assets/img/og_sushi.jpg" />
+  <meta property="og:url" content="https://kaikaisushi.cl/" />
+  <meta property="og:type" content="restaurant" />
+  <meta property="og:locale" content="es_CL" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KaiKai Sushi El Quisco | Delivery & Rolls Frescos">
+  <meta name="twitter:description"
+    content="El mejor sushi de El Quisco 🍣 | Rolls, handrolls, combos y más. Delivery rápido. ¡Pide por WhatsApp!" />
+  <meta name="twitter:image" content="https://kaikaisushi.cl/assets/img/og_sushi.jpg">
   <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=RocknRoll+One&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- 📜 MENU schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Menu",
+    "url": "https://kaikaisushi.cl/menu",
+    "hasMenuSection": [
+      {
+        "@type": "MenuSection",
+        "name": "Rolls",
+        "description": "Rolls tradicionales y premium",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "California Roll",
+            "description": "Kanikama, palta y pepino",
+            "offers": {
+              "@type": "Offer",
+              "price": "4990",
+              "priceCurrency": "CLP"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
 </head>
 
 <body>
@@ -45,9 +94,16 @@
               <li><a href="#">Menú</a></li>
               <li><a href="#">Reservas</a></li>
               <li><a href="#">Contacto</a></li>
+              <div class="header-phone">
+                <a href="tel:+56974649523" class="phone-link">
+                  <i class="bi bi-telephone-fill"></i> +56 9 7464 9523
+                </a>
+              </div>
             </ul>
           </nav>
         </div>
+
+
       </div>
     </div>
     <!-- Botón del carrito -->
@@ -63,12 +119,10 @@
     </div>
   </header>
 
-
   <!-- Contenedor principal de la tienda de sushi -->
   <div class="container my-5">
-    <h1 class="text-center fw-bold text-white">Bienvenidos a KAIKAI SUSHI</h1>
+    <h1 class="text-center fw-bold text-white">🍣 Bienvenidos a KAIKAI SUSHI</h1>
     <div id="sushis-container" class="row g-4 mt-4">
-
     </div>
   </div>
 
@@ -81,28 +135,53 @@
 
     <div class="offcanvas-body border-bottom"></div>
     <div class="px-3 py-2 border-top">
-  <h5 class="fw-bold mt-3">Incluimos en tu pedido</h5>
+      <h5 class="fw-bold mt-3">Incluimos en tu pedido</h5>
 
-  <div class="d-flex justify-content-between align-items-center mt-2">
-    <span>Salsa Teriyaki</span>
-    <label class="switch">
-      <input type="checkbox" id="toggleSalsaTeriyaki" checked>
-      <span class="slider"></span>
-    </label>
-  </div>
+      <div class="extra-item d-flex justify-content-between align-items-center mt-2">
+        <span>Salsa Acevichada <small class="text-muted">(+ $800)</small></span>
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-outline-secondary btn-extra-menos" data-tipo="acevichada">−</button>
+          <span id="contador-acevichada">0</span>
+          <button class="btn btn-sm btn-outline-secondary btn-extra-mas" data-tipo="acevichada">+</button>
+        </div>
+      </div>
 
-  <div class="d-flex justify-content-between align-items-center mt-2">
-    <span>Jengibre</span>
-    <label class="switch">
-      <input type="checkbox" id="toggleJengibre" checked>
-      <span class="slider"></span>
-    </label>
-  </div>
+      <div class="extra-item d-flex justify-content-between align-items-center mt-2">
+        <span>Salsa Teriyaki <small class="text-muted">(+ $800)</small></span>
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-outline-secondary btn-extra-menos" data-tipo="teriyaki">−</button>
+          <span id="contador-teriyaki">0</span>
+          <button class="btn btn-sm btn-outline-secondary btn-extra-mas" data-tipo="teriyaki">+</button>
+        </div>
+      </div>
 
-  <p class="small mt-3 text-secondary">
-    1 Salsa Soya por Roll, 2 Palitos por persona
-  </p>
-</div>
+      <div class="extra-item d-flex justify-content-between align-items-center mt-2">
+        <span>Salsa Spicy <small class="text-muted">(+ $800)</small></span>
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-outline-secondary btn-extra-menos" data-tipo="spicy">−</button>
+          <span id="contador-spicy">0</span>
+          <button class="btn btn-sm btn-outline-secondary btn-extra-mas" data-tipo="spicy">+</button>
+        </div>
+      </div>
+
+      <div class="extra-item d-flex justify-content-between align-items-center mt-2">
+        <span>Salsa Maracuya <small class="text-muted">(+ $800)</small></span>
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-outline-secondary btn-extra-menos" data-tipo="maracuya">−</button>
+          <span id="contador-maracuya">0</span>
+          <button class="btn btn-sm btn-outline-secondary btn-extra-mas" data-tipo="maracuya">+</button>
+        </div>
+      </div>
+
+
+      <p class="small mt-3 text-secondary">
+        1 Salsa Soya por Roll, 2 Palitos por persona
+      </p>
+
+      <button id="btn-reset-extras" class="btn btn-sm btn-danger w-100 mt-3">
+        <i class="bi bi-arrow-counterclockwise"></i> Limpiar extras
+      </button>
+    </div>
 
     <div class="offcanvas-footer mt-4">
       <h5 class="justify-content-between mb-2">
@@ -124,7 +203,7 @@
           <p class="mb-0">
             © 2025
             <a target="_blank" rel="noreferrer" href="https://www.puntoserviciosweb.cl"
-              class="text-white text-decoration-none">Julio Hidalgo</a>
+              class="text-white text-decoration-none">PuntoserviciosWeb</a>
             || Todos los derechos reservados.
           </p>
         </div>
@@ -141,7 +220,6 @@
       </div>
     </div>
   </footer>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/obtenerProductos.js"></script>
   <script src="assets/js/app.js"></script>

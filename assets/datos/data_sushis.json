@@ -73,10 +73,7 @@
         "price": 10500,
         "image": "fritos_20",
         "category": "frito",
-        "details": [
-          "Camaron queso cebollin",
-          "Pollo queso cebollin"
-        ]
+        "details": ["Camaron queso cebollin", "Pollo queso cebollin"]
       },
       {
         "name": "30 Fritos",
@@ -185,7 +182,7 @@
       {
         "name": "Gohan champiñón apanado",
         "price": 6300,
-        "image": "gohan_champi",
+        "image": "gohan_champinon",
         "category": "gohan"
       },
       {
@@ -197,7 +194,7 @@
       {
         "name": "Gohan Acevichado",
         "price": 8000,
-        "image": "gohan_acevichado",
+        "image": "muestra",
         "category": "gohan"
       }
     ]
@@ -248,8 +245,14 @@
         "base": ["Queso", "Palta", "Cebollín"],
         "envolturas": ["Panko", "Salmon", "Palta", "Queso Crema"],
         "proteinas": [
-          "Salmon", "Salmon Furai", "Camarón", "Camarón furai",
-          "Pollo", "Pollo Furai", "Palmito", "Champiñón Furai"
+          "Salmon",
+          "Salmon Furai",
+          "Camarón",
+          "Camarón furai",
+          "Pollo",
+          "Pollo Furai",
+          "Palmito",
+          "Champiñón Furai"
         ]
       }
     ]
@@ -261,21 +264,21 @@
       {
         "name": "Onigiris (5 unidades)",
         "price": 5500,
-        "image": "antojito_onigiri",
+        "image": "muestra",
         "category": "antojitos",
         "details": "+ Salsa de la casa"
       },
       {
         "name": "Bastones de pollo (6 unidades)",
         "price": 4500,
-        "image": "antojito_pollo",
+        "image": "muestra",
         "category": "antojitos",
         "details": "+ Salsa de la casa"
       },
       {
         "name": "Camarón apanado (6 unidades)",
         "price": 4800,
-        "image": "antojito_camaron",
+        "image": "muestra",
         "category": "antojitos",
         "details": "+ Salsa de la casa"
       }
@@ -285,10 +288,30 @@
   {
     "title": "SALSAS DE LA CASA",
     "items": [
-      { "name": "Acevichada", "image": "salsa_acevichada", "category": "salsas","price": 800 },
-      { "name": "Teriyaki", "image": "salsa_teriyaki", "category": "salsas","price": 800 },
-      { "name": "Spicy", "image": "salsa_spicy", "category": "salsas","price": 800 },
-      { "name": "Maracuya", "image": "salsa_maracuya", "category": "salsas","price": 800 }
+      {
+        "name": "Acevichada",
+        "image": "salsa_acevichada",
+        "category": "salsas",
+        "price": 800
+      },
+      {
+        "name": "Teriyaki",
+        "image": "salsa_teriyaki",
+        "category": "salsas",
+        "price": 800
+      },
+      {
+        "name": "Spicy",
+        "image": "salsa_spicy",
+        "category": "salsas",
+        "price": 800
+      },
+      {
+        "name": "Maracuya",
+        "image": "salsa_maracuya",
+        "category": "salsas",
+        "price": 800
+      }
     ]
   }
 ]

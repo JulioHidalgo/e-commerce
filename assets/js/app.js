@@ -1,214 +1,198 @@
-// ===== VARIABLES // ========
-let articulosCarrito = []; 
-const carritoContainer = document.querySelector(".offcanvas-body"); 
-const offcanvas = document.querySelector(".offcanvas"); 
-const btn_shopping = document.querySelector(".btn_shopping"); 
-const subtotalElement = document.getElementById("subtotal"); 
-const contadorCarrito = document.querySelector("#contador-carrito"); 
-const closeButton = document.querySelector(".btn-close"); 
+// ================= VARIABLES =================
+let articulosCarrito = [];
 
+const carritoContainer = document.querySelector(".offcanvas-body");
+const offcanvas = document.querySelector(".offcanvas");
+const btnShopping = document.querySelector(".btn_shopping");
+const subtotalElement = document.getElementById("subtotal");
+const contadorCarrito = document.getElementById("contador-carrito");
+const btnWhatsApp = document.getElementById("btn-wsp");
+const closeButton = document.querySelector(".btn-close");
 
-// ===== INICIO  ===========
+const PRECIO_EXTRA = 800;
+
+const extrasPedido = {
+  acevichada: 0,
+  teriyaki: 0,
+  spicy: 0,
+  maracuya: 0,
+};
+
+// ================= INICIO =================
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("btn-wsp").addEventListener("click", generarPedidoWhatsApp);
-  document.getElementById("sushis-container").addEventListener("click", agregarAlCarrito);
-  renderizarCarrito();
+  document
+    .getElementById("sushis-container")
+    .addEventListener("click", agregarAlCarrito);
+
+  btnWhatsApp.addEventListener("click", generarPedidoWhatsApp);
+
+  document.querySelectorAll(".btn-extra-mas").forEach((btn) => {
+    btn.addEventListener("click", (e) =>
+      cambiarExtra(e.target.dataset.tipo, 1)
+    );
+  });
+
+  document.querySelectorAll(".btn-extra-menos").forEach((btn) => {
+    btn.addEventListener("click", (e) =>
+      cambiarExtra(e.target.dataset.tipo, -1)
+    );
+  });
+
+  document
+    .getElementById("btn-reset-extras")
+    .addEventListener("click", resetearExtras);
+
+  actualizarVista();
 });
 
+// ================= EXTRAS =================
+function cambiarExtra(tipo, cambio) {
+  if (!extrasPedido.hasOwnProperty(tipo)) return;
 
-// Función para agregar al carrito
+  extrasPedido[tipo] = Math.max(0, extrasPedido[tipo] + cambio);
+  document.getElementById(`contador-${tipo}`).textContent = extrasPedido[tipo];
+
+  actualizarVista();
+}
+
+function resetearExtras() {
+  Object.keys(extrasPedido).forEach((tipo) => {
+    extrasPedido[tipo] = 0;
+    document.getElementById(`contador-${tipo}`).textContent = 0;
+  });
+
+  actualizarVista();
+}
+
+// ================= CARRITO =================
 function agregarAlCarrito(e) {
   const btn = e.target.closest(".btn-cart");
-
-
-  if (btn) {
-  offcanvas.classList.add("show");
-  btn_shopping.classList.add("balanceo");
-  setTimeout(() => {
-    btn_shopping.classList.remove("balanceo");
-  }, 500);
-
+  if (!btn) return;
 
   const card = btn.closest(".card");
+
   const producto = {
     id: card.dataset.id,
     nombre: card.dataset.name,
     categoria: card.dataset.category,
-    precio: parseFloat(card.dataset.price),
+    precio: Number(card.dataset.price),
     cantidad: 1,
-    imagen: `assets/img/img-products/${card.dataset.image}.jpg`
+    imagen: `assets/img/img-products/${card.dataset.image}.jpg`,
   };
 
-  const existe = articulosCarrito.find(item => item.id === producto.id);
-  if (existe) {
-    existe.cantidad++;
-  } else {
-    articulosCarrito.push(producto);
-  }
+  const existe = articulosCarrito.find((p) => p.id === producto.id);
 
-  renderizarCarrito();
-  actualizarSubtotal();
-  actualizarContadorCarrito();
-  actualizarEstadoBotonWhatsApp();
- }
+  existe ? existe.cantidad++ : articulosCarrito.push(producto);
+
+  offcanvas.classList.add("show");
+  btnShopping.classList.add("balanceo");
+  setTimeout(() => btnShopping.classList.remove("balanceo"), 400);
+
+  actualizarVista();
 }
 
 function renderizarCarrito() {
   carritoContainer.innerHTML = "";
 
-  if (articulosCarrito.length === 0) {
-    carritoContainer.innerHTML = "<p class='text-center'>El carrito está vacío.</p>";
+  if (!articulosCarrito.length) {
+    carritoContainer.innerHTML =
+      "<p class='text-center'>El carrito está vacío.</p>";
     return;
   }
 
   articulosCarrito.forEach((producto) => {
-    const itemHTML = `
-      <div class="container mb-3">
+    carritoContainer.innerHTML += `
+      <div class="container mb-2">
         <div class="row align-items-center border-bottom py-2">
           <div class="col-3">
-            <img class="img-fluid rounded" src="${producto.imagen}" alt="${producto.nombre}" />
+            <img class="img-fluid rounded" src="${producto.imagen}">
           </div>
           <div class="col-6">
-            <h6 class="mb-1 title-product">${producto.nombre}</h6>
-            <p class="mb-0 detalles-product">Categoría: ${producto.categoria}</p>
+            <strong>${producto.nombre}</strong>
+            <p class="mb-0 small">${producto.categoria}</p>
           </div>
           <div class="col-3 text-end">
-            <span class="fw-bold">
-              <span class="fs-6 color-gris">${producto.cantidad}x</span>
-              <span class="fs-7 precio">$${(producto.precio * producto.cantidad).toFixed(2)}</span>
-            </span>
-
-            <button class="btn btn-danger mt-2 btn-borrar" data-id="${producto.id}">
+            ${producto.cantidad}x $${producto.precio * producto.cantidad}
+            <button class="btn btn-danger btn-sm mt-1 btn-borrar" data-id="${
+              producto.id
+            }">
               <i class="bi bi-trash3"></i>
             </button>
           </div>
         </div>
-      </div>
-    `;
-    carritoContainer.insertAdjacentHTML("beforeend", itemHTML);
+      </div>`;
   });
 
-  agregarEventosBorrar();
+  document
+    .querySelectorAll(".btn-borrar")
+    .forEach((btn) => btn.addEventListener("click", eliminarProducto));
 }
 
-// ==== ELIMINAR PRODUCTOS =================
-function agregarEventosBorrar() {
-  const botonesBorrar = document.querySelectorAll(".btn-borrar");
+function eliminarProducto(e) {
+  const id = e.target.closest("button").dataset.id;
 
-  botonesBorrar.forEach((boton) => {
-    boton.addEventListener("click", (e) => {
-      const productoId = e.target.closest("button").dataset.id;
+  articulosCarrito = articulosCarrito
+    .map((p) => (p.id === id ? { ...p, cantidad: p.cantidad - 1 } : p))
+    .filter((p) => p.cantidad > 0);
 
-      articulosCarrito = articulosCarrito
-        .map((producto) => {
-          if (producto.id === productoId) {
-            if (producto.cantidad > 1) {
-              producto.cantidad--;
-              return producto;
-            }
-            return null;
-          }
-          return producto;
-        })
-        .filter((producto) => producto !== null);
-
-      renderizarCarrito();
-      actualizarSubtotal();
-      actualizarContadorCarrito();
-      actualizarEstadoBotonWhatsApp();
-    });
-  });
+  actualizarVista();
 }
 
-// ========= SUBTOTAL ==========
-function actualizarSubtotal() {
-  const subtotal = articulosCarrito.reduce((total, producto) => {
-    return total + producto.precio * producto.cantidad;
-  }, 0);
-  subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-}
-
-// ===== CONTADOR ================
-function actualizarContadorCarrito() {
-  const totalProductos = articulosCarrito.length;
-  contadorCarrito.textContent = totalProductos;
-}
-
-// Función para generar y enviar un pedido a través de WhatsApp
-function generarPedidoWhatsApp() {
-  if (articulosCarrito.length === 0) {
-    alert("El carrito está vacío. ¡Agrega productos antes de enviar el pedido!");
-    return;
-  }
-
-  // Obtener extras ACTUALIZADOS en tiempo real
-  const extras = obtenerExtrasPedido();
-
-  let mensaje = "¡Hola! Quiero realizar el siguiente pedido:\n\n";
-
-  articulosCarrito.forEach((producto, index) => {
-    mensaje += `${index + 1}. ${producto.nombre} (${producto.categoria}) - $${producto.precio} x ${producto.cantidad}\n`;
-  });
-
-  const total = articulosCarrito.reduce(
-    (acc, producto) => acc + producto.precio * producto.cantidad,
+// ================= TOTALES =================
+function calcularSubtotal() {
+  const productos = articulosCarrito.reduce(
+    (acc, p) => acc + p.precio * p.cantidad,
     0
   );
 
-  mensaje += `\nTotal: $${total.toFixed(2)}\n\n`;
+  const extras = Object.values(extrasPedido).reduce(
+    (acc, c) => acc + c * PRECIO_EXTRA,
+    0
+  );
 
-  // Agregar EXTRAS correctamente
-  mensaje += "Extras del pedido:\n";
-  mensaje += `- Salsa Teriyaki: ${extras.salsaTeriyaki ? "Sí" : "No"}\n`;
-  mensaje += `- Jengibre: ${extras.jengibre ? "Sí" : "No"}\n`;
-  mensaje += `${extras.fijo}\n\n`;
-
-  mensaje += "¡Gracias!";
-
-  const mensajeCodificado = encodeURIComponent(mensaje);
-
-  const urlWhatsApp = `https://wa.me/56936821844?text=${mensajeCodificado}`;
-  window.open(urlWhatsApp, "_blank");
+  return productos + extras;
 }
 
+function actualizarVista() {
+  renderizarCarrito();
 
-function obtenerExtrasPedido() {
-  return {
-    salsaTeriyaki: document.getElementById("toggleSalsaTeriyaki").checked,
-    jengibre: document.getElementById("toggleJengibre").checked,
-    fijo: "1 Salsa Soya, 2 Palitos por persona"
-  };
-}
+  subtotalElement.textContent = `$${calcularSubtotal()}`;
 
-
-// === ANIMACIÓN VENTANA COSTADO CON PRODUCTOS ================
-function toggleOffcanvas(show) {
-  offcanvas.style.transition = "transform 0.6s ease, opacity 0.6s ease";
-
-  if (show) {
-    offcanvas.classList.add("show");
-  } else {
-    offcanvas.classList.remove("show");
-    offcanvas.classList.add("hiding");
-    setTimeout(() => offcanvas.classList.remove("hiding"), 600);
-  }
-}
-
-btn_shopping.addEventListener("click", () => {
-  toggleOffcanvas(!offcanvas.classList.contains("show"));
-  btn_shopping.classList.toggle("balanceo");
-});
-
-closeButton.addEventListener("click", () => toggleOffcanvas(false));
-
-// Deshabilitar el botón si el carrito está vacío
-const btnWhatsApp = document.querySelector("[data-whatsapp]");
-
-function actualizarEstadoBotonWhatsApp() {
-  if (!btnWhatsApp) return; // Evita error si el botón no existe
+  contadorCarrito.textContent = articulosCarrito.reduce(
+    (acc, p) => acc + p.cantidad,
+    0
+  );
 
   btnWhatsApp.disabled = articulosCarrito.length === 0;
 }
 
-// Llamar a la función para actualizar el estado del botón cada vez que se actualice el carrito
-actualizarEstadoBotonWhatsApp();
+// ================= WHATSAPP =================
+function generarPedidoWhatsApp() {
+  if (!articulosCarrito.length) return;
+
+  let mensaje = "🍣 *PEDIDO KAIKAI SUSHI* 🍣\n\n";
+
+  articulosCarrito.forEach((p, i) => {
+    mensaje += `${i + 1}. ${p.nombre} x${p.cantidad} - $${
+      p.precio * p.cantidad
+    }\n`;
+  });
+
+  mensaje += "\n*EXTRAS:*\n";
+  Object.entries(extrasPedido).forEach(([tipo, cantidad]) => {
+    if (cantidad > 0) {
+      mensaje += `• ${tipo} x${cantidad} (+$${cantidad * PRECIO_EXTRA})\n`;
+    }
+  });
+
+  mensaje += `\n*TOTAL:* $${calcularSubtotal()}\n`;
+  mensaje += "\n1 Salsa Soya por roll\n2 Palitos por persona\n\n📍 El Quisco";
+
+  const url = `https://wa.me/56974649523?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
+}
+
+// ================= OFFCANVAS =================
+btnShopping.addEventListener("click", () => offcanvas.classList.toggle("show"));
+
+closeButton.addEventListener("click", () => offcanvas.classList.remove("show"));
